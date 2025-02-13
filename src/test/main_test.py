@@ -2,35 +2,52 @@ import pandas as pd
 import random
 from faker import Faker
 
-import sys
-#sys.path.append("../lib/game")
-#sys.path.append("../lib/institution")
-#sys.path.append("../lib/psychology")
-#sys.path.append("../lib/data")
-import election
-import data_filters
-
-
+from lib.game import election
+from lib.data import data_filters
 
 def election_test():
     candidate_number = int(input("How many candidates are running?: "))
     candidates = make_people(candidate_number)
     candidates = data_filters.remove_unknown_people(candidates)
     popularity = []
-    print(f"The type of candidates is {type(candidates)}\n")
+    ideology = []
     for candidate in candidates.iterrows():
         popularity.append(random.randrange(0,11))
+        ideology.append(random.randrange(0,11))
     candidates["Popularity"] = popularity
+    candidates["Ideology Score"] = ideology
 
     influencer_number = int(input("How many influencers are interested in the election?: "))
     influencers = make_people(influencer_number)
-    influeuncers = data_filters.remove_unknown_people(influencers)
+    influencers = data_filters.remove_unknown_people(influencers)
     popularity = []
+    ideology = []
     for influencer in influencers.iterrows():
         popularity.append(random.randrange(0,11))
+        ideology.append(random.randrange(0,11))
     influencers["Popularity"] = popularity
+    influencers["Ideology Score"] = ideology
+    influencers["Endorsed Candidate"] = candidates["Name"][random.randrange(0, len(candidates["Name"]))]
+    influencers["Condemned Candidate"] = candidates["Name"][random.randrange(0, len(candidates["Name"]))]
 
-    print(f"Here are the candidates:\n{candidates}\n Here are the influencers:\n{influencers}\n")
+    legislator_number = int(input("How many legislators are there?: "))
+    legislators = make_people(legislator_number)
+    legislators = data_filters.remove_unknown_people(legislators)
+    popularity = []
+    ideology = []
+    for legislator in legislators.iterrows():
+        popularity.append(random.randrange(0,11))
+        ideology.append(random.randrange(0,11))
+    legislators["Popularity"] = popularity
+    legislators["Ideology Score"] = ideology
+    legislators["Endorsed Candidate"] = candidates["Name"][random.randrange(0, len(candidates["Name"]))]
+    legislators["Condemned Candidate"] = candidates["Name"][random.randrange(0, len(candidates["Name"]))]
+
+    print(f"Here are the candidates:\n{candidates}\n Here are the influencers:\n{influencers}\n Here are the legislators:\n{legislators}\n")
+    print("Running election\n")
+    result = election.simulate_election(candidates, legislators, influencers)
+    print(f"The result of the elections is {result}\n")
+
 
 def make_people(people_number):
     data = {};
@@ -53,10 +70,7 @@ def make_people(people_number):
             genders.append("Male")
             names.append(faking.name_male())
         addresses.append(faking.address())
-    data.update({ "name" : names, "gender" : genders, "Address" : addresses })
+    data.update({ "Name" : names, "Gender" : genders, "Address" : addresses })
     data = pd.DataFrame(data)
-    print(f"Here is the resulting data\n{data}")
-    #ideaology_classifier = Classifier(pd.DataFrame({
-        #"Gender": {"Male": 20, "Female": -20, "Non-Binary": 45},
-    #}))
+    #print(f"Here is the resulting data\n{data}")
     return data

@@ -1,5 +1,7 @@
 import pandas as pd
 import torch
+
+#replace legislaq6tors and influencers with winning coalition. Later add selectorate.
 def simulate_election(candidates, legislators, influencers):
     results = pd.DataFrame(columns = ["Name", "Win Chances"])
     for index, candidate in candidates.iterrows():
@@ -12,7 +14,7 @@ def simulate_election(candidates, legislators, influencers):
                 endorsement += 15
             if legislator["Condemned Candidate"] == candidate["Name"]:
                 endorsement += -15
-            print(f"The legislator {legislator} supports {candidate["Name"]} {endorsement}%\n")
+            print(f"The legislator {legislator} supports {candidate["Name"]} {endorsement}\n")
             endorsement_list.append(endorsement)
 
         for index, influencer in influencers.iterrows():
@@ -21,9 +23,9 @@ def simulate_election(candidates, legislators, influencers):
                 endorsement += 15
             if influencer["Condemned Candidate"] == candidate["Name"]:
                 endorsement += -15
-            print(f"The legislator {influencer} supports {candidate["Name"]} {endorsement}%\n")
+            print(f"The legislator {influencer} supports {candidate["Name"]} {endorsement}\n")
             endorsement_list.append(endorsement)
         total_endorsement = sum(endorsement_list)
-        print(f"The mean endorsement for {candidate} is {total_endorsement}%\n")
+        print(f"The mean endorsement for {candidate} is {total_endorsement}\n")
         results.loc[len(results.index)] = [ total_endorsement, candidate["Name"] ]
         return results
