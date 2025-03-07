@@ -2,13 +2,8 @@ import pandas as pd
 import random
 from faker import Faker
 
-import sys
-#sys.path.append("../lib/game")
-#sys.path.append("../lib/institution")
-#sys.path.append("../lib/psychology")
-#sys.path.append("../lib/data")
-import election
-import data_filters
+from lib.game import election
+from lib.data import data_filters
 
 
 
@@ -31,6 +26,20 @@ def election_test():
     influencers["Popularity"] = popularity
 
     print(f"Here are the candidates:\n{candidates}\n Here are the influencers:\n{influencers}\n")
+
+def organization_test():
+    member_number = int(input("How many people are in the organization?: "))
+    members = make_people(member_number)
+    positions = ["Worker", "Manager"]
+    departments_list = ["Command", "Financial", "General Labor", "Special Labor", "Logistics", "Human Resources"]
+    titles = []
+    departments = []
+    for member in members.iterrows():
+        titles.append(positions[random.randrange(0, len(positions))])
+        departments.append(departments_list[random.randrange(0, len(departments_list))])
+    members["Title"] = titles
+    members["Department"] = departments
+    print(f"Here are the people in the organization: \n{members}\n")
 
 def make_people(people_number):
     data = {};
