@@ -5,18 +5,17 @@ In modern times there is a firehose of information and politics is no different,
 Most of the math used in this application will be calculus, linear algebra, statistics, and game theory however more advanced math is planned: group theory, differential geometry, and functional analysis as well as some other miscellaneous stuff. The math will be discovered/verified using machine learning methods such as SINDy (Sparse Identification of Nonlinear Dynamics) and physics informed neural networks (which was the inspiration to take the application in this direction). One of the main goals of the application is to produce differential equations that predicts the decisions made by the entities (people, groups, organizations) based off of their payoffs, which will be called their strategy. The strategy and the associated DE can be shown along with the data to give insights as to what the entities are doing, why they are doining it, and what they will do in the future.
 ## Necessary Packages
 ### Python
-1. sympy
-2. numpy
-3. pandas
-4. scipy
-5. torch (cuda/rocm)
-  1. torchaudio and torchvision
-6. transformers (torch version) by huggingface
-7. matplotlib
-8. seaborn
-9. bokeh
-10. plotly
-11. jupyter
+1. numpy
+2. pandas
+3. scipy
+4. sympy
+6. networkx
+7. torch (cuda/rocm)
+    1. torchaudio
+    2. torchvision
+8. transformers (torch version) by huggingface
+9. matplotlib
+10. jupyter
 ### DataBase
 As of now the only database is MySql, however any sql relational database would probably work. At a certain point a vector database and a search engine might be useful.
 ## Commit Rules
